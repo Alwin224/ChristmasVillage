@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "dependencies": {
+    "lil-gui": "^0.21.0",
+    "three": "^0.181.2",
+    "vite": "^7.2.7",
+    "vite-plugin-glsl": "^1.5.5"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite-plugin-restart": "^2.0.0"
+  }
+}
