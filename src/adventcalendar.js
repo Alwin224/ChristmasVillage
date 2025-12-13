@@ -117,7 +117,7 @@ perlinTexture.depthWrite = false
 //aurora borealis
 //geometry
 //first plane was 20, 4
-const auroraBorealisGeometry = new THREE.PlaneGeometry(20, 4, 32, 32)
+const auroraBorealisGeometry = new THREE.PlaneGeometry(20, 8, 32, 32)
 auroraBorealisGeometry.translate(0, 1, -2.25)
 
 

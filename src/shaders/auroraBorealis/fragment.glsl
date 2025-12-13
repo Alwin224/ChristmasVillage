@@ -14,7 +14,7 @@ vec3 finalColor = noise * auroraColor;
 float edgeFadeX = smoothstep(0.0, 0.1, vUv.x) * smoothstep(1.0, 0.9, vUv.x);
 float edgeFadeY = smoothstep(0.0, 0.1, vUv.y) * smoothstep(1.0, 0.9, vUv.y);
 float edgeFade = edgeFadeX * edgeFadeY;
-float transparency = noise * noise * noise;
+float transparency = noise * noise ;
 //final color with the edges included
 gl_FragColor = vec4(finalColor, edgeFade * transparency); 
    
