@@ -117,14 +117,13 @@ perlinTexture.depthWrite = false
 //aurora borealis
 //geometry
 //first plane was 20, 4
-const auroraBorealisGeometry = new THREE.PlaneGeometry(12, 4, 32, 32)
+const auroraBorealisGeometry = new THREE.PlaneGeometry(20, 4, 32, 32)
 auroraBorealisGeometry.translate(0, 1, -2.25)
 
 
 
 //mesh
 const auroraBorealisMaterial = new THREE.ShaderMaterial({
-    //wireframe: true,
     transparent: true,
     side: THREE.DoubleSide,
     vertexShader: auroraBorealisVertexShader,
@@ -138,13 +137,13 @@ const auroraBorealisMaterial = new THREE.ShaderMaterial({
 })
 
 const auroraBorealisMesh = new THREE.Mesh(auroraBorealisGeometry, auroraBorealisMaterial)
-auroraBorealisMesh.rotation.z = Math.PI / 1.8; //rotated on the z
+auroraBorealisMesh.rotation.z = Math.PI/1.9; //fixed it to be 1.9
 scene.add(auroraBorealisMesh)
 //snow
 //geometry
 const snowTexture = textureLoader.load('./snow.png')
 const particlesGeometry = new THREE.BufferGeometry()
-const count = 1000
+const count = 2000
 const positions = new Float32Array(count * 3)
 
 for (let i = 0; i < count * 3; i++) {
