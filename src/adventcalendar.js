@@ -7,6 +7,7 @@ import coffeeSmokeVertexShader from './shaders/coffeeSmoke/vertex.glsl'
 import coffeeSmokeFragmentShader from './shaders/coffeeSmoke/fragment.glsl'
 import auroraBorealisVertexShader from './shaders/auroraBorealis/vertex.glsl'
 import auroraBorealisFragmentShader from './shaders/auroraBorealis/fragment.glsl'
+import { PI } from 'three/tsl';
 
 //scene
 const scene = new THREE.Scene()
@@ -20,7 +21,7 @@ const hemisphereLight = new THREE.HemisphereLight(0xACCFFF, 0xDDE7F2, 0.5)
 hemisphereLight.position.set(0, 20, 0)
 scene.add(hemisphereLight)
 
-const directionalLight = new THREE.DirectionalLight(0xB3D9FF, 0.3)
+const directionalLight = new THREE.DirectionalLight(0xB3D9FF, 0.8)
 directionalLight.position.set(5, 10, 7.5)
 scene.add(directionalLight)
 
@@ -46,9 +47,12 @@ scene.add(camera)
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
 controls.enablePan = false
-controls.enableRotate = false
-controls.maxDistance = 3.5
+//controls.enableRotate = false
 
+controls.minPolarAngle = Math.PI/2;
+controls.maxPolarAngle = Math.PI/2
+controls.maxDistance = 3.5
+controls.minDistance = 1.5
 //renderer
 const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true }) //antialias smooths the pixels
 renderer.setPixelRatio(window.devicePixelRatio)
@@ -137,7 +141,7 @@ const auroraBorealisMaterial = new THREE.ShaderMaterial({
 })
 
 const auroraBorealisMesh = new THREE.Mesh(auroraBorealisGeometry, auroraBorealisMaterial)
-auroraBorealisMesh.rotation.z = Math.PI/1.9; //fixed it to be 1.9
+auroraBorealisMesh.rotation.z = -Math.PI/1.9; //fixed it to be 1.9
 scene.add(auroraBorealisMesh)
 //snow
 //geometry
@@ -185,9 +189,17 @@ const smokeMaterial = new THREE.ShaderMaterial({
     depthWrite:false,
  
 })
+
+let model = null
+let floor0group = new THREE.Group()
+let floor1group = new THREE.Group()
+let floor2group = new THREE.Group()
+let floor3group = new THREE.Group()
+let floor4group = new THREE.Group()
+scene.add(floor0group)
 gltfLoader.load('./AdventCalendar.glb',
     (gltf) => {
-        const model = gltf.scene
+        model = gltf.scene
         gltf.scene.scale.set(2, 2, 2)
         model.position.set(0, -1, 0)
         scene.add(model)
@@ -198,11 +210,13 @@ gltfLoader.load('./AdventCalendar.glb',
                 child.material = smokeMaterial
             }
         })
-
-
-
-    })
-
+       //Access a group from blender
+        floor0group = model.getObjectByName("Floor_Zero_E")
+        floor1group = model.getObjectByName("Floor_One_E")
+        floor2group = model.getObjectByName("Floor_Two_E")
+        floor3group = model.getObjectByName("Floor_Three_E")
+        floor4group = model.getObjectByName("Floor_Four_E")
+   })
 
 //clock
 const clock = new THREE.Clock()
@@ -211,6 +225,17 @@ const clock = new THREE.Clock()
 const tick = () => {
 
     const elapsedTime = clock.getElapsedTime()
+
+    //rotate objects
+     if(floor0group && floor2group && floor4group){
+            floor0group.rotation.y += 0.001
+            floor2group.rotation.y += 0.001
+            floor4group.rotation.y += 0.001
+        }
+    if(floor1group && floor3group){
+            floor1group.rotation.y -= 0.001
+            floor3group.rotation.y -= 0.001
+        }
 
     //update snow
     const positionAttr = particlesGeometry.getAttribute('position')
