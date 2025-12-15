@@ -100,6 +100,7 @@ window.addEventListener('dblclick', () => {
 const overlayGeometry = new THREE.PlaneGeometry(2,2,1, 1)
 const overlayMaterial = new THREE.ShaderMaterial({
     transparent:true,
+    
     uniforms: {
         uAlpha: {value: 1}
     },
@@ -115,11 +116,13 @@ const overlayMaterial = new THREE.ShaderMaterial({
     }
     `
 })
+overlayMaterial.depthWrite = false
+overlayMaterial.depthTest = false //sent the depth write to be false for it to disappear
 
 const overlay = new THREE.Mesh(overlayGeometry, overlayMaterial)
+overlay.renderOrder = 10
 scene.add(overlay)
-//textureloader
-const textureLoader = new THREE.TextureLoader()
+
 
 const loadingBarElement = document.querySelector('.loading-bar')
 //loading Manager
@@ -143,6 +146,8 @@ const loadingManager = new THREE.LoadingManager(
 }
 )
 
+//textureloader
+const textureLoader = new THREE.TextureLoader(loadingManager) //added loading manager to the textures
 //dracoLoader
 const dracoLoader = new DRACOLoader(loadingManager)
 dracoLoader.setDecoderPath('/draco/')
@@ -214,9 +219,11 @@ particlesMaterial.sizeAttenuation = true
 particlesMaterial.alphaMap = snowTexture
 particlesMaterial.transparent = true
 particlesMaterial.depthWrite = false
+particlesMaterial.alphaTest = 0.01
 
 //mesh for points snow
 const particles = new THREE.Points(particlesGeometry, particlesMaterial)
+particles.renderOrder = 1 //sets the order of when to render
 scene.add(particles)
 //smokeShaderMaterial
 const smokeMaterial = new THREE.ShaderMaterial({
