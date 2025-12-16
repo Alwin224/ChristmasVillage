@@ -30,8 +30,8 @@ scene.add(hemisphereLight)
 const directionalLight = new THREE.DirectionalLight(0xB3D9FF, 0.8)
 directionalLight.position.set(2,1,12)
 directionalLight.castShadow = true
-directionalLight.shadow.mapSize.width = 1024
-directionalLight.shadow.mapSize.height = 1024
+directionalLight.shadow.mapSize.width = 2048
+directionalLight.shadow.mapSize.height = 2048
 directionalLight.shadow.radius = 1
 directionalLight.shadow.camera.near = 1
 directionalLight.shadow.camera.far = 12
